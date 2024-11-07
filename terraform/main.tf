@@ -29,3 +29,25 @@ resource "aws_lambda_function_url" "lambda_url" {
   authorization_type = "NONE"
 }
 
+#Code to trigger lambda on file upload
+
+# Add the S3 bucket notification to trigger the Lambda on file upload
+resource "aws_s3_bucket_notification" "bucket_notification" {
+  bucket = "landing-data-bucket-1220-16492640"  # Existing S3 bucket
+
+  lambda_function {
+    lambda_function_arn = aws_lambda_function.api_lambda.arn
+    events              = ["s3:ObjectCreated:*"]
+    filter_prefix       = "Youtube/fun-facts/"    # Folder prefix in the bucket
+    filter_suffix       = "Fact.json"             # File name to trigger the Lambda
+  }
+}
+
+# Allow the S3 bucket to invoke the Lambda function
+resource "aws_lambda_permission" "allow_s3_invocation" {
+  statement_id  = "AllowExecutionFromS3"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.api_lambda.function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = "arn:aws:s3:::landing-data-bucket-1220-16492640"  # Source bucket ARN
+}

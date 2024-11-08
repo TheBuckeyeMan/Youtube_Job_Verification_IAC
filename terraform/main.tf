@@ -55,3 +55,27 @@ resource "aws_lambda_permission" "allow_s3_invocation" {
   principal     = "s3.amazonaws.com"
   source_arn    = "arn:aws:s3:::landing-data-bucket-1220-16492640"  # Source bucket ARN
 }
+
+resource "aws_iam_policy" "lambda_invoke_policy" {
+  name        = "LambdaInvokeOtherLambdasPolicy"
+  description = "Allows invocation of specific Lambda functions"
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = "lambda:InvokeFunction"
+        Resource = [
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-1",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-2"
+          # Add more ARNs as needed
+        ]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "attach_lambda_invoke_policy" {
+  role       = data.aws_iam_role.existing_lambda_role.name
+  policy_arn = aws_iam_policy.lambda_invoke_policy.arn
+}

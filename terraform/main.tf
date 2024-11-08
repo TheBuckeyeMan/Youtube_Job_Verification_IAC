@@ -16,7 +16,11 @@ resource "aws_lambda_function" "api_lambda" {
 
   environment {
     variables = {
-      Api_Key = var.Api_Key 
+      Api_Key = var.Api_Key
+      EMAIL      = var.EMAIL
+      EMAIL_KEY  = var.EMAIL_KEY
+      EMAIL_TO   = var.EMAIL_TO
+      EMAIL_HOST = var.EMAIL_HOST
     }
   }
 

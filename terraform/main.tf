@@ -1,6 +1,6 @@
 data "aws_ecr_image" "latest_image" {
   repository_name = "youtube-containers"
-  image_tag       = "youtube-job-verification"
+  image_tag       = "JobCheckService"
 }
 
 data "aws_iam_role" "existing_lambda_role" {

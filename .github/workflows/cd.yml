@@ -35,5 +35,12 @@ jobs:
         working-directory: terraform
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" -var="aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" -var="Api_Key=${{ secrets.API_KEY }}"
+        run: terraform apply -auto-approve \
+          -var="aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" \
+          -var="aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" \
+          -var="Api_Key=${{ secrets.API_KEY }}" \
+          -var="EMAIL=${{ secrets.EMAIL }}" \
+          -var="EMAIL_KEY=${{ secrets.EMAIL_KEY }}" \
+          -var="EMAIL_TO=${{ secrets.EMAIL_TO }}" \
+          -var="EMAIL_HOST=${{ secrets.EMAIL_HOST }}"
         working-directory: terraform

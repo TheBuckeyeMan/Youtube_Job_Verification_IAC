@@ -81,15 +81,30 @@ resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
       {
         Effect = "Allow",
         Action = [
-          "ecs:RunTask",                # Permission to run an ECS task
-          "ecs:DescribeTasks",          # Optional: Describe ECS tasks
-          "iam:PassRole"                # Required to pass a task execution role
+          "ecs:RunTask",
+          "ecs:DescribeTasks",
+          "ecs:DescribeTaskDefinition",
+          "ecs:DescribeClusters",
+          "ecs:ListTasks",
+          "ecs:StopTask"
         ],
         Resource = [
-          "arn:aws:ecs:us-east-2:339712758982:cluster/youtube-cluster",         # ECS cluster ARN
-          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:1", # ECS task definition ARN
-          "arn:aws:iam::339712758982:role/ecs-task-execution-role"          # ECS task execution role
+          "arn:aws:ecs:us-east-2:339712758982:cluster/youtube-cluster",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:1"
         ]
+      },
+      {
+        Effect = "Allow",
+        Action = "iam:PassRole",
+        Resource = "arn:aws:iam::339712758982:role/ecs-task-execution-role"
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "*"
       }
     ]
   })

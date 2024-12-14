@@ -96,7 +96,10 @@ resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
       {
         Effect = "Allow",
         Action = "iam:PassRole",
-        Resource = "arn:aws:iam::339712758982:role/ecs-task-execution-role"
+        Resource = [
+          "arn:aws:iam::339712758982:role/ecs-task-execution-role",
+          "arn:aws:iam::339712758982:role/ecs-task-role" # Add this ARN
+        ]
       },
       {
         Effect = "Allow",
@@ -109,3 +112,4 @@ resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
     ]
   })
 }
+

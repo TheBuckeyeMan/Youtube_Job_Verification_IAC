@@ -58,7 +58,7 @@ resource "aws_lambda_permission" "allow_s3_invocation" {
 
 # Inline policy to allow Lambda invocation
 resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
-  name   = "LambdaInvokeOtherLambdasInlinePolicy"
+  name   = "LambdaInvokeOtherServicesInlinePolicy"
   role   = data.aws_iam_role.existing_lambda_role.name
   policy = jsonencode({
     Version = "2012-10-17",
@@ -68,8 +68,24 @@ resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
         Action = "lambda:InvokeFunction",
         Resource = [
           "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-1",
-          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-2"
-          # Add more ARNs as needed
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-2",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-3",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-4",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-5",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-6"
+        ]
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "ecs:RunTask",                # Permission to run an ECS task
+          "ecs:DescribeTasks",          # Optional: Describe ECS tasks
+          "iam:PassRole"                # Required to pass a task execution role
+        ],
+        Resource = [
+          "arn:aws:ecs:us-east-2:339712758982:cluster/youtube-cluster",         # ECS cluster ARN
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:1", # ECS task definition ARN
+          "arn:aws:iam::339712758982:role/ecs-task-execution-role"          # ECS task execution role
         ]
       }
     ]

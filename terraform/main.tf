@@ -35,6 +35,16 @@ resource "aws_lambda_function_url" "lambda_url" {
 
 #Code to trigger lambda on file upload
 
+# Allow the S3 bucket to invoke the Lambda function
+resource "aws_lambda_permission" "allow_s3_invocation" {
+  statement_id  = "AllowExecutionFromS3"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.api_lambda.function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = "arn:aws:s3:::logging-event-driven-bucket-1220-16492640"  # Source bucket ARN
+}
+
+
 # Add the S3 bucket notification to trigger the Lambda on file upload
 resource "aws_s3_bucket_notification" "bucket_notification" {
   bucket = "logging-event-driven-bucket-1220-16492640"  # Existing S3 bucket
@@ -45,15 +55,8 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     filter_prefix       = "youtube-app/"    # Folder prefix in the bucket
     filter_suffix       = "youtube-logs.csv"             # File name to trigger the Lambda
   }
-}
 
-# Allow the S3 bucket to invoke the Lambda function
-resource "aws_lambda_permission" "allow_s3_invocation" {
-  statement_id  = "AllowExecutionFromS3"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.api_lambda.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::logging-event-driven-bucket-1220-16492640"  # Source bucket ARN
+  depends_on = [aws_lambda_permission.allow_s3_invocation]
 }
 
 # Inline policy to allow Lambda invocation

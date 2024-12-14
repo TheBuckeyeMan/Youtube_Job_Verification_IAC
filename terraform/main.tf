@@ -53,7 +53,7 @@ resource "aws_lambda_permission" "allow_s3_invocation" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.api_lambda.function_name
   principal     = "s3.amazonaws.com"
-  source_arn    = "arn:aws:s3:::landing-data-bucket-1220-16492640"  # Source bucket ARN
+  source_arn    = "logging-event-driven-bucket-1220-16492640"  # Source bucket ARN
 }
 
 # Inline policy to allow Lambda invocation

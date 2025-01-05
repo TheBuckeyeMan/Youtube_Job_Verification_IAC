@@ -75,7 +75,12 @@ resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
           "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-3",
           "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-4",
           "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-5",
-          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-6"
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-6",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-7",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-8",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-9",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-10",
+          "arn:aws:lambda:us-east-2:339712758982:function:youtube-service-11"
         ]
       },
       {
@@ -90,7 +95,14 @@ resource "aws_iam_role_policy" "lambda_invoke_inline_policy" {
         ],
         Resource = [
           "arn:aws:ecs:us-east-2:339712758982:cluster/youtube-cluster",
-          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:1"
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:1",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:2",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:3",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:4",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:5",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:6",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:7",
+          "arn:aws:ecs:us-east-2:339712758982:task-definition/youtube-service-4:8"
         ]
       },
       {
